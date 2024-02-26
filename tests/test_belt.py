@@ -1,15 +1,7 @@
 from unittest.mock import patch
 
-import pytest
-
 from factory_simulator.belt import Belt
 from factory_simulator.enums import Item
-
-
-@pytest.fixture(autouse=True)
-def reset_belt_slots():
-    yield
-    Belt().slots = []
 
 
 def test_belt_is_singleton():

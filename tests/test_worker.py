@@ -7,12 +7,6 @@ from factory_simulator.enums import Row, Item
 from factory_simulator.worker import Worker
 
 
-@pytest.fixture(autouse=True)
-def reset_belt_slots():
-    yield
-    Belt().slots = []
-
-
 def test_worker_is_initialised_correctly():
     # GIVEN
     belt_position = 2
