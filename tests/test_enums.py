@@ -14,13 +14,13 @@ def test_row_is_type_enum():
 
 
 def test_type_a_and_type_b_items_are_components():
-    assert Item.TYPE_A in Item.COMPONENT
-    assert Item.TYPE_B in Item.COMPONENT
+    assert Item.A in Item.COMPONENT
+    assert Item.B in Item.COMPONENT
 
 
 @pytest.mark.parametrize(
     "item",
-    [Item.EMPTY, Item.TYPE_A, Item.TYPE_B, Item.PRODUCT, Item.COMPONENT]
+    [Item.EMPTY, Item.A, Item.B, Item.P, Item.COMPONENT]
 )
 def test_item_representation_is_the_items_name(item):
     # GIVEN
@@ -39,5 +39,5 @@ def test_item_returns_random_input(mock_random_choice):
     # WHEN
     actual = Item.get_random_input()
     # THEN
-    mock_random_choice.assert_called_once_with((expected, Item.TYPE_A, Item.TYPE_B))
+    mock_random_choice.assert_called_once_with((expected, Item.A, Item.B))
     assert actual == expected

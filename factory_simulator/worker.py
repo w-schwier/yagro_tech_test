@@ -11,8 +11,8 @@ class Worker:
         self.held = []
 
     def _place_product(self, belt: Belt) -> bool:
-        if Item.PRODUCT in self.held and belt.slots[self.belt_position] is Item.EMPTY:
-            belt.slots[self.belt_position] = self.held.pop(self.held.index(Item.PRODUCT))
+        if Item.P in self.held and belt.slots[self.belt_position] is Item.EMPTY:
+            belt.slots[self.belt_position] = self.held.pop(self.held.index(Item.P))
             return True
         return False
 
@@ -25,8 +25,8 @@ class Worker:
         return False
 
     def _assemble(self) -> bool:
-        if Item.TYPE_A in self.held and Item.TYPE_B in self.held:
-            self.held = [Item.PRODUCT]
+        if Item.A in self.held and Item.B in self.held:
+            self.held = [Item.P]
             return True
         return False
 

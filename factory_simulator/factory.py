@@ -31,11 +31,13 @@ class Factory:
         self._action_workers()
 
     def print_state(self):
-        top_row_workers = [f"{w.belt_position}: {w.held}" for w in self.workers[Row.TOP]]
-        bottom_row_workers = [f"{w.belt_position}: {w.held}" for w in self.workers[Row.BOTTOM]]
-        print(f"{Row.TOP.name}: {top_row_workers}")
-        print(f"Belt: {self.belt.slots}")
-        print(f"{Row.BOTTOM.name}: {bottom_row_workers}")
+        top_row_workers = [f"{w.belt_position+1}: {w.held}" for w in self.workers[Row.TOP]]
+        belt_slots = [f"{i+1}: [{s.name}]" for i, s in enumerate(self.belt.slots)]
+        bottom_row_workers = [f"{w.belt_position+1}: {w.held}" for w in self.workers[Row.BOTTOM]]
+
+        print(f"{Row.TOP.name} ROW: {top_row_workers}")
+        print(f"BELT: {belt_slots}")
+        print(f"{Row.BOTTOM.name} ROW: {bottom_row_workers}")
         print("\n***************\n")
 
     def print_tally(self):

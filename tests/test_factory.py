@@ -60,7 +60,7 @@ def test_factory_can_action_workers():
 @patch.object(Belt, 'move')
 def test_factory_can_tick(mock_move_belt, mock_action_workers):
     # GIVEN
-    item = Item.PRODUCT
+    item = Item.P
     factory = Factory(1)
     mock_move_belt.return_value = item
     # WHEN
@@ -75,14 +75,14 @@ def test_factory_can_print_state(capfd):
     # GIVEN
     top_worker = Worker(0, Row.TOP)
     bottom_worker = Worker(0, Row.BOTTOM)
-    top_worker.held = [Item.PRODUCT]
-    bottom_worker.held = [Item.TYPE_A, Item.TYPE_B]
+    top_worker.held = [Item.P]
+    bottom_worker.held = [Item.A, Item.B]
     factory = Factory(1)
     factory.workers = {Row.TOP: [top_worker], Row.BOTTOM: [bottom_worker]}
     expected_text = (
-        "TOP: ['0: [PRODUCT]']\n"
-        'Belt: [EMPTY]\n'
-        "BOTTOM: ['0: [TYPE_A, TYPE_B]']\n"
+        "TOP ROW: ['1: [P]']\n"
+        "BELT: ['1: [EMPTY]']\n"
+        "BOTTOM ROW: ['1: [A, B]']\n"
         '\n'
         '***************\n'
         '\n'
@@ -98,9 +98,9 @@ def test_factory_can_print_state(capfd):
 def test_factory_can_print_tally(capfd):
     # GIVEN
     factory = Factory(1)
-    output = [Item.EMPTY, Item.EMPTY, Item.PRODUCT, Item.TYPE_A]
+    output = [Item.EMPTY, Item.EMPTY, Item.P, Item.A]
     factory.output = output
-    expected_tally = "{EMPTY: 2, PRODUCT: 1, TYPE_A: 1}"
+    expected_tally = "{EMPTY: 2, P: 1, A: 1}"
     # WHEN
     capfd.readouterr()
     factory.print_tally()
