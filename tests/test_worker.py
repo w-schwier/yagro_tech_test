@@ -205,7 +205,7 @@ def test_worker_takes_action_to_assemble(mock_place_product, mock_pick_up_compon
     # WHEN
     action_taken = worker.take_action(belt)
     # THEN
-    assert action_taken is True
+    assert action_taken is False
     mock_place_product.assert_called_once_with(belt)
     mock_pick_up_component.assert_called_once_with(belt)
     mock_assemble.assert_called_once()

@@ -40,11 +40,12 @@ class Worker:
         return False
 
     def take_action(self, belt: Belt) -> bool:
+        # Bool returned represents whether the belt was interacted with during action
         if self._place_product(belt):
             return True
         elif self._pick_up_component(belt):
             return True
         elif self._assemble():
-            return True
+            return False
         else:
             return False

@@ -45,6 +45,10 @@ def test_factory_can_action_workers():
     top_worker2 = Mock()
     bottom_worker1 = Mock()
     bottom_worker2 = Mock()
+    top_worker1.take_action.return_value = False
+    top_worker2.take_action.return_value = False
+    bottom_worker1.take_action.return_value = True
+    bottom_worker2.take_action.return_value = True
     factory = Factory(2)
     factory.workers = {Row.TOP: [top_worker1, top_worker2], Row.BOTTOM: [bottom_worker1, bottom_worker2]}
     # WHEN
@@ -54,6 +58,28 @@ def test_factory_can_action_workers():
     top_worker2.take_action.assert_called_once_with(belt)
     bottom_worker1.take_action.assert_called_once_with(belt)
     bottom_worker2.take_action.assert_called_once_with(belt)
+
+
+def test_factory_only_has_one_belt_interaction_per_worker_pair_during_action_workers():
+    # GIVEN
+    belt = Belt()
+    top_worker1 = Mock()
+    top_worker2 = Mock()
+    bottom_worker1 = Mock()
+    bottom_worker2 = Mock()
+    top_worker1.take_action.return_value = False
+    top_worker2.take_action.return_value = True
+    bottom_worker1.take_action.return_value = True
+    bottom_worker2.take_action.return_value = False
+    factory = Factory(2)
+    factory.workers = {Row.TOP: [top_worker1, top_worker2], Row.BOTTOM: [bottom_worker1, bottom_worker2]}
+    # WHEN
+    factory._action_workers()
+    # THEN
+    top_worker1.take_action.assert_called_once_with(belt)
+    top_worker2.take_action.assert_called_once_with(belt)
+    bottom_worker1.take_action.assert_called_once_with(belt)
+    bottom_worker2.take_action.assert_not_called()
 
 
 @patch.object(Factory, '_action_workers')

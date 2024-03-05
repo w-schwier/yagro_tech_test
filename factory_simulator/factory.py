@@ -21,10 +21,9 @@ class Factory:
         print(f"Empty belt created with {belt_length} slot(s)\nWorkers populated")
 
     def _action_workers(self):
-        for worker in self.workers[Row.TOP]:
-            worker.take_action(self.belt)
-        for worker in self.workers[Row.BOTTOM]:
-            worker.take_action(self.belt)
+        for i, worker in enumerate(self.workers[Row.TOP]):
+            if not worker.take_action(self.belt):
+                self.workers[Row.BOTTOM][i].take_action(self.belt)
 
     def tick(self):
         self.output.append(self.belt.move())
